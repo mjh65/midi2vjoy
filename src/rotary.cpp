@@ -1,6 +1,22 @@
+/*
+ *   Midi2vJoy - Windows utility to feed vJoy from MIDI controller
+ *   Copyright (C) 2023 Michael Hasling <michael.hasling@gmail.com>
+ *
+ *   This program is free software: you can redistribute it and/or modify
+ *   it under the terms of the GNU Affero General Public License as published by
+ *   the Free Software Foundation, either version 3 of the License, or
+ *   (at your option) any later version.
+ *
+ *   This program is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU Affero General Public License for more details.
+ *
+ *   You should have received a copy of the GNU Affero General Public License
+ *   along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
 
 #include "rotary.h"
-#include <iostream>
 
 midi2vjoy::rotary::rotary(rotary_callback* cb, unsigned int b)
 :   m_cb(cb), m_base_id(b),
@@ -29,7 +45,6 @@ unsigned int midi2vjoy::rotary::rotate(unsigned char velocity)
     auto sv = (int)velocity - 64;
     auto mag = ((sv * sv - 1) / 4) + 1;
     m_current_btn_down = bidx;
-    //std::cout << "T:" << m_btn_timer << "+" << mag << std::endl;
     m_btn_timer += mag;
     return bidx;
 }

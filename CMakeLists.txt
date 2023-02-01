@@ -24,6 +24,8 @@ target_include_directories(midi2vjoy PRIVATE
 
 target_sources(midi2vjoy PRIVATE
     ${CMAKE_CURRENT_LIST_DIR}/src/main.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/src/midi.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/src/midi.h
     ${CMAKE_CURRENT_LIST_DIR}/src/worker.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/worker.h
     ${CMAKE_CURRENT_LIST_DIR}/src/rotary.cpp
