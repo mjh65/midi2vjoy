@@ -20,8 +20,8 @@
 
 midi2vjoy::rotary::rotary(rotary_callback* cb, unsigned int b)
 :   m_cb(cb), m_base_id(b),
-    m_mode(false), m_current_btn_down(0), m_btn_timer(0)
-
+    m_pushed(false), m_rotated(false), m_toggled(false),
+    m_current_btn_down(0), m_btn_timer(0)
 {
 }
 
@@ -30,14 +30,24 @@ midi2vjoy::rotary::~rotary()
     release();
 }
 
-void midi2vjoy::rotary::mode(unsigned char val)
+void midi2vjoy::rotary::push(unsigned char val)
 {
-    m_mode = (val != 0);
+    bool down = (val != 0);
+    if (down)
+    {
+        m_rotated = false;
+    }
+    else if (!m_rotated)
+    {
+        m_toggled = !m_toggled;
+    }
+    m_pushed = down;
 }
 
 unsigned int midi2vjoy::rotary::rotate(unsigned char velocity)
 {
-    int bidx = m_base_id + (m_mode ? 2 : 0) + ((velocity > 64) ? 1 : 0);
+    auto mode = m_pushed ^ m_toggled;
+    int bidx = m_base_id + (mode ? 2 : 0) + ((velocity > 64) ? 1 : 0);
     if (m_current_btn_down != bidx)
     {
         release();
@@ -46,6 +56,7 @@ unsigned int midi2vjoy::rotary::rotate(unsigned char velocity)
     auto mag = ((sv * sv - 1) / 4) + 1;
     m_current_btn_down = bidx;
     m_btn_timer += mag;
+    m_rotated = true;
     return bidx;
 }
 

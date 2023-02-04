@@ -90,12 +90,12 @@ void midi2vjoy::worker::action(unsigned char id, unsigned char val)
     else if ((id >= 9) && (id <= 16))
     {
         // Layer A, rotary button push - toggles mode
-        rotaries[id - 9]->mode(val);
+        rotaries[id - 9]->push(val);
     }
     else if ((id >= 59) && (id <= 66))
     {
         // Layer B, rotary button push - toggles mode
-        rotaries[NUM_ROTARIES + id - 59]->mode(val);
+        rotaries[NUM_ROTARIES + id - 59]->push(val);
     }
     else if ((id >= 1) && (id <= 8))
     {

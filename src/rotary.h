@@ -32,7 +32,7 @@ public:
     rotary(rotary_callback *cb, unsigned int b);
     ~rotary();
 
-    void mode(unsigned char val);
+    void push(unsigned char val);
     unsigned int rotate(unsigned char velocity);
     void countdown();
 
@@ -42,7 +42,9 @@ private:
 private:
     rotary_callback* const m_cb;
     unsigned int const m_base_id;
-    bool m_mode;
+    bool m_pushed;
+    bool m_rotated;
+    bool m_toggled;
 
     unsigned int m_current_btn_down;
     unsigned int m_btn_timer;
